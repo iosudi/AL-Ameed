@@ -2,17 +2,38 @@ import rentService from "@/api/rentService/rentService";
 import logo from "@/assets/Logo.svg";
 import DashboardNavbar from "@/common/components/DashboardNavbar";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/AuthContext";
 import { RentalResults } from "@/interfaces/RentalRequest";
 import { NAMESPACES } from "@/translations/namespaces";
-import { formatDate } from "@/utils/dateHelpers";
+import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { BsGlobe2 } from "react-icons/bs";
 import { useParams } from "react-router-dom";
+import * as Yup from "yup";
+
+const confirmSchema = Yup.object().shape({
+  start_date: Yup.string()
+    .required("Start date is required")
+    .matches(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)"),
+  end_date: Yup.string()
+    .required("End date is required")
+    .matches(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)")
+    .test("is-after", "End date must be after start date", function (value) {
+      const { start_date } = this.parent;
+      return new Date(value) > new Date(start_date);
+    }),
+});
 
 export default function RentRequestDetails() {
   const { i18n, t } = useTranslation([
@@ -21,9 +42,10 @@ export default function RentRequestDetails() {
     NAMESPACES.rentRequests,
     NAMESPACES.rentRequestDetails,
   ]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const currentLanguage = i18n.language;
   const { logout } = useAuth();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
 
   const { id } = useParams();
@@ -31,40 +53,23 @@ export default function RentRequestDetails() {
     null
   );
 
-  const handleConfirmRequest = async () => {
-    if (!id) return;
-    try {
-      setConfirming(true);
-      await rentService.confirmRentToOwnRequest(id);
-      toast.success(t("rentRequestDetails:requestAccepted"));
-      // optionally refetch details if status changes
-      getRequestDetails();
-    } catch (error) {
-      console.error(error);
-      toast.error(t("rentRequestDetails:failedToAccept"));
-    } finally {
-      setConfirming(false);
-    }
-  };
-
-  const handleSendPaymentNotification = async () => {
-    if (!id) return;
-    try {
-      setLoading(true);
-      await rentService.sendPaymentNotification(id);
-      toast.success("Payment reminder sent successfully!");
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to send payment reminder.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const handleSendPaymentNotification = async () => {
+  //   if (!id) return;
+  //   try {
+  //     setLoading(true);
+  //     await rentService.sendPaymentNotification(id);
+  //     toast.success("Payment reminder sent successfully!");
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error("Failed to send payment reminder.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   async function getRequestDetails() {
     if (id) {
       const res = await rentService.getRentToOwnRequestById(id);
-      console.log(res);
 
       setRequestDetails(res.data);
     }
@@ -114,23 +119,27 @@ export default function RentRequestDetails() {
 
             <div className="mt-12">
               <div className="mt-6 flex justify-end gap-3">
-                <Button
+                {/* <Button
                   onClick={handleSendPaymentNotification}
                   disabled={loading}
                 >
                   {loading
                     ? t("rentRequestDetails:sending")
                     : t("rentRequestDetails:sendPaymentReminder")}
-                </Button>
+                </Button> */}
 
                 <Button
-                  onClick={handleConfirmRequest}
-                  disabled={confirming}
-                  className="bg-green-600 text-white hover:bg-green-700"
+                  onClick={() => setIsDialogOpen(true)}
+                  disabled={requestDetails?.status === "confirmed"} // disable if confirmed
+                  className={`text-white ${
+                    requestDetails?.status === "confirmed"
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-green-600 hover:bg-green-700"
+                  }`}
                 >
-                  {confirming
-                    ? t("rentRequestDetails:accepting")
-                    : t("rentRequestDetails:acceptRequest")}
+                  {requestDetails?.status === "confirmed"
+                    ? t("rentRequestDetails:confirmed") // show "Confirmed"
+                    : t("rentRequestDetails:acceptRequest")}{" "}
                 </Button>
               </div>
               <h2 className="text-xl pb-3 border-b font-bold border-neutral-400">
@@ -177,7 +186,7 @@ export default function RentRequestDetails() {
                   />
                 </div>
 
-                <div>
+                {/* <div>
                   <Label className="mb-2 text-base" htmlFor="start_date">
                     {t("rentRequestDetails:startDate")}
                   </Label>
@@ -191,9 +200,9 @@ export default function RentRequestDetails() {
                     className=" py-5 placeholder:font-[400] placeholder:text-neutral-400 rounded-lg"
                     readOnly
                   />
-                </div>
+                </div> */}
 
-                <div>
+                {/* <div>
                   <Label className="mb-2 text-base" htmlFor="end_date">
                     {t("rentRequestDetails:endDate")}
                   </Label>
@@ -204,7 +213,7 @@ export default function RentRequestDetails() {
                     className=" py-5 placeholder:font-[400] placeholder:text-neutral-400 rounded-lg"
                     readOnly
                   />
-                </div>
+                </div> */}
               </div>
 
               <h2 className="text-xl pb-3 border-b font-bold border-neutral- mt-6">
@@ -349,6 +358,94 @@ export default function RentRequestDetails() {
           </div>
         </div>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {t("rentRequestDetails:confirmRequestTitle")}
+            </DialogTitle>
+          </DialogHeader>
+
+          <Formik
+            initialValues={{ start_date: "", end_date: "" }}
+            validationSchema={confirmSchema}
+            onSubmit={async (values, actions) => {
+              if (!id) return;
+              try {
+                setConfirming(true);
+                await rentService.confirmRentToOwnRequest(id, values); // API call
+                toast.success(t("rentRequestDetails:requestAccepted"));
+                getRequestDetails();
+                setIsDialogOpen(false);
+              } catch (error) {
+                console.error(error);
+                toast.error(t("rentRequestDetails:failedToAccept"));
+              } finally {
+                setConfirming(false);
+                actions.setSubmitting(false);
+              }
+            }}
+          >
+            {({
+              errors,
+              touched,
+              handleChange,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <Label className="mb-2" htmlFor="start_date">
+                    {t("rentRequestDetails:startDate")}
+                  </Label>
+                  <input
+                    className="w-full border border-gray-300 rounded-md p-2"
+                    type="date"
+                    id="start_date"
+                    name="start_date"
+                    onChange={handleChange}
+                  />
+                  {errors.start_date && touched.start_date && (
+                    <p className="text-red-500 text-sm">{errors.start_date}</p>
+                  )}
+                </div>
+
+                <div>
+                  <Label className="mb-2" htmlFor="end_date">
+                    {t("rentRequestDetails:endDate")}
+                  </Label>
+                  <input
+                    className="w-full border border-gray-300 rounded-md p-2"
+                    type="date"
+                    id="end_date"
+                    name="end_date"
+                    onChange={handleChange}
+                  />
+                  {errors.end_date && touched.end_date && (
+                    <p className="text-red-500 text-sm">{errors.end_date}</p>
+                  )}
+                </div>
+
+                <DialogFooter>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setIsDialogOpen(false)}
+                  >
+                    {t("rentRequestDetails:cancel")}
+                  </Button>
+                  <Button type="submit" disabled={isSubmitting || confirming}>
+                    {confirming
+                      ? t("rentRequestDetails:accepting")
+                      : t("rentRequestDetails:confirm")}
+                  </Button>
+                </DialogFooter>
+              </form>
+            )}
+          </Formik>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

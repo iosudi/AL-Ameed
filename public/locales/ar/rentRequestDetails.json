@@ -24,5 +24,9 @@
   "acceptRequest": "قبول الطلب",
   "accepting": "جاري القبول...",
   "requestAccepted": "تم قبول الطلب بنجاح!",
-  "failedToAccept": "فشل في قبول الطلب."
+  "failedToAccept": "فشل في قبول الطلب.",
+  "confirm": "تأكيد",
+  "cancel": "إلغاء",
+  "confirmRequestTitle": "تأكيد طلب إستأجر لتملك",
+  "confirmed": "تم التأكيد"
 }

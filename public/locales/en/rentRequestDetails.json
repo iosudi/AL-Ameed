@@ -24,5 +24,9 @@
   "acceptRequest": "Accept Request",
   "accepting": "Accepting...",
   "requestAccepted": "Request accepted successfully!",
-  "failedToAccept": "Failed to accept request."
+  "failedToAccept": "Failed to accept request.",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "confirmRequestTitle": "Confirm Rent to Own Request",
+  "confirmed": "Confirmed"
 }

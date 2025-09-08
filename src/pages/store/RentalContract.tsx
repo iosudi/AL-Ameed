@@ -53,22 +53,32 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
     }),
 
     // Step 2: RentalDuration
-    Yup.object().shape({
-      start_date: Yup.string()
-        .required("Start date is required")
-        .matches(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)"),
-      end_date: Yup.string()
-        .required("End date is required")
-        .matches(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)")
-        .test(
-          "is-after",
-          "End date must be after start date",
-          function (value) {
-            const { start_date } = this.parent;
-            return new Date(value) > new Date(start_date);
-          }
-        ),
-    }),
+    ...(contractType === "rental"
+      ? [
+          Yup.object().shape({
+            start_date: Yup.string()
+              .required("Start date is required")
+              .matches(
+                /^\d{4}-\d{2}-\d{2}$/,
+                "Invalid date format (YYYY-MM-DD)"
+              ),
+            end_date: Yup.string()
+              .required("End date is required")
+              .matches(
+                /^\d{4}-\d{2}-\d{2}$/,
+                "Invalid date format (YYYY-MM-DD)"
+              )
+              .test(
+                "is-after",
+                "End date must be after start date",
+                function (value) {
+                  const { start_date } = this.parent;
+                  return new Date(value) > new Date(start_date);
+                }
+              ),
+          }),
+        ]
+      : []),
 
     ...(contractType === "rent_to_own"
       ? [
@@ -113,12 +123,28 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
   const steps = [
     t("steps.tenant"),
     t("steps.upload"),
-    // t("steps.carSpecs"),
-    t("steps.duration"),
+    contractType === "rental" ? t("steps.duration") : null,
     contractType === "rent_to_own" ? t("steps.downPrice") : null,
     t("steps.terms"),
     t("steps.payment"),
   ].filter((step): step is string => step !== null);
+
+  const stepComponents =
+    contractType == "rent_to_own"
+      ? [
+          <TenantInformation />,
+          <UploadFiles />,
+          <DownPriceStep />,
+          <RentalTerms terms={TermsProps} />,
+          <PaymentStep />,
+        ]
+      : [
+          <TenantInformation />,
+          <UploadFiles />,
+          <RentalDuration />,
+          <RentalTerms terms={TermsProps} />,
+          <PaymentStep />,
+        ];
 
   const initialValues: RentCarForm = {
     customer_data: {
@@ -220,24 +246,6 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
 
   const next = () => setCurrentStep((prev) => prev + 1);
   const back = () => setCurrentStep((prev) => prev - 1);
-
-  const stepComponents =
-    contractType == "rent_to_own"
-      ? [
-          <TenantInformation />,
-          <UploadFiles />,
-          <RentalDuration />,
-          <DownPriceStep />,
-          <RentalTerms terms={TermsProps} />,
-          <PaymentStep />,
-        ]
-      : [
-          <TenantInformation />,
-          <UploadFiles />,
-          <RentalDuration />,
-          <RentalTerms terms={TermsProps} />,
-          <PaymentStep />,
-        ];
 
   const isLastStep = currentStep === steps.length - 1;
   const isStepFive = currentStep === 4;

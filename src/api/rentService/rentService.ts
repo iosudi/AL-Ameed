@@ -57,9 +57,10 @@ const sendPaymentNotification = (id: string) => {
 }
 
 
-async function confirmRentToOwnRequest(id: string | number) {
-    return axiosInstance.post(`/rentals/rentals-to-own/${id}/confirm/`);
+async function confirmRentToOwnRequest(id: string, data: { start_date: string; end_date: string }) {
+    return axiosInstance.post(`/rentals/rentals-to-own/${id}/confirm/`, data);
 }
+
 
 
 const rentService = {
