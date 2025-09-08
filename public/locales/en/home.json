@@ -1,0 +1,67 @@
+{
+  "hero": {
+    "heading": "Buy, Sell, Exchange, and Rent <br /> All Types of Cars",
+    "search_placeholder": "Search for brand or model",
+    "no_results": "No results found",
+    "error_message": "An error occurred while fetching data",
+    "go_to_store": "Go to Store",
+    "sell_your_car": "Sell Your Car",
+    "all_cars": "All Cars",
+    "new_cars": "New",
+    "used_cars": "Used",
+    "exclusive_offers": "Exclusive Offers",
+    "services": {
+      "heading": "Our Services",
+      "usedCars": {
+        "title": "Used Cars",
+        "desc": "Certified and inspected"
+      },
+      "newCars": {
+        "title": "New Cars",
+        "desc": "Agency warranty"
+      },
+      "rentCars": {
+        "title": "Car Rental",
+        "desc": "Custom durations"
+      },
+      "rentToOwn": {
+        "title": "Rent to Own",
+        "desc": "Financial comfort"
+      },
+      "upholstery": {
+        "title": "Car Upholstery",
+        "desc": "Modern designs"
+      }
+    },
+    "brands": {
+      "heading": "Browse Cars by Brand",
+      "view_all": "View All Cars"
+    }
+  },
+
+  "cars_gallery": {
+    "heading": "Cars Gallery",
+    "used_cars": "Used cars",
+    "new_cars": "New Cars"
+  },
+
+  "rental_offers": {
+    "heading": "Rental Offers"
+  },
+
+  "why_us": {
+    "title": "Why Choose Us?",
+    "card1": {
+      "title": "Experience & Reliability",
+      "description": "With years of experience in the car market, we enjoy a solid reputation among our clients."
+    },
+    "card2": {
+      "title": "Wide Range of Vehicles",
+      "description": "We offer a large selection of new and used cars, helping you find the one that suits your taste and needs."
+    },
+    "card3": {
+      "title": "Commitment to Satisfaction",
+      "description": "We work tirelessly to ensure your complete satisfaction through unlimited cooperation to meet all your expectations."
+    }
+  }
+}

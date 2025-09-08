@@ -1,0 +1,18 @@
+export interface SellCarForm {
+    brand_model: string,
+    year: string,
+    mileage: string,
+    transmission: string,
+    fuel_type: string,
+    color: string,
+    previous_accidents: string,
+    previous_owners_count: string,
+    body_condition: string,
+    accessories: string,
+    seller_name: string,
+    seller_phone: string,
+    seller_email: string,
+    uploaded_images: null | File[],
+    price: string,
+    price_negotiable: string,
+}

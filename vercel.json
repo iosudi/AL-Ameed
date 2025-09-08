@@ -1,0 +1,21 @@
+{
+  "build": {
+    "env": {
+      "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "http://164.92.231.197/api/:path*"
+    },
+    {
+      "source": "/api/:path*/",
+      "destination": "http://164.92.231.197/api/:path*/"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

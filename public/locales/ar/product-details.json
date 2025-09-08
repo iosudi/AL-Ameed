@@ -1,0 +1,32 @@
+{
+  "carDetails": {
+    "priceLabel": "السعر",
+    "rent": "إستأجــــر",
+    "rent_to_own": "إستأجــــر لتملك",
+    "callNow": "اتصــــــل الآن",
+    "whatsapp": "راسلنا واتساب",
+    "compare": "مقارنـة",
+    "favorite": "أضف إلى المفضلة",
+    "full_screen": "اضغط هنا لتكبير الشاشة"
+  },
+  "carInfoHeading": "معلومات السيارة",
+  "carScanHeading": "فحص السيارة",
+  "carRate": {
+    "heading": "تقييم السيارة",
+    "label": "تقييم سيارة",
+    "price": "السعر",
+    "comfort": "الراحة",
+    "interior": "التصميم الداخلي",
+    "exterior": "التصميم الخارجي",
+    "reliability": "المصداقية",
+    "performance": "الأداء",
+    "form": {
+      "name": "الاسم",
+      "name_placeholder": "اسمك بالكامل",
+      "email": "البريد الإلكتروني",
+      "comment": "تعليقك",
+      "comment_placeholder": "اكتب تعليقك...",
+      "submit": "إرسال"
+    }
+  }
+}

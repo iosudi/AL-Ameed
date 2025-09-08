@@ -1,0 +1,39 @@
+{
+  "general_faqs_title": "General Frequently Asked Questions",
+  "send_us_question_title": "Send us your question",
+  "send_us_question_description": "Please send your question to us, and we will respond to you as soon as possible",
+
+  "form": {
+    "full_name_placeholder": "Your full name",
+    "email_placeholder": "example@gmail.com",
+    "subject_placeholder": "Subject",
+    "question_placeholder": "Your question",
+    "submit_button": "Send"
+  },
+
+  "questions": {
+    "how_to_buy": "How can I buy a car from the showroom?",
+    "compare_cars": "Can I compare between more than one car before buying?",
+    "used_cars": "Are there used cars available?",
+    "how_to_rent": "How to book a car for rent?",
+    "rent_modification": "Is there flexibility in modifying or canceling a rental reservation?",
+    "delivery": "Do you deliver the car to the location I choose?",
+    "car_inspection": "How is the car inspected before and after rental?",
+    "upholstery_services": "Are there car upholstery services?",
+    "choose_upholstery": "How do I choose the right upholstery design?",
+    "working_hours": "What are the working hours and branches?"
+  },
+
+  "answers": {
+    "how_to_buy": "You can browse the cars on display with full specifications (model, price, condition, mileage, and photos), and you can book a viewing or test drive. Payment is electronic and secure.",
+    "compare_cars": "Yes, the platform allows you to easily compare between cars to choose the most suitable one for you.",
+    "used_cars": "Yes, we provide new and used cars in excellent condition with clear details for each car.",
+    "how_to_rent": "Through the platform, you can choose the car by category and specifications, determine the rental period (daily, weekly, or monthly), and complete the reservation and payment electronically.",
+    "rent_modification": "Yes, you can easily modify or cancel your reservation through your account.",
+    "delivery": "Of course, we provide car delivery service to your doorstep upon request.",
+    "car_inspection": "A comprehensive electronic inspection form is filled out to ensure the quality of the car before delivery and after return.",
+    "upholstery_services": "Yes, we provide custom upholstery services, and you can choose the type of leather or fabric, color, and pattern, and book online with electronic payment.",
+    "choose_upholstery": "We provide you with visual samples to help you choose the appropriate design in terms of color, material, and pattern.",
+    "working_hours": "West Riffa branch:\nSaturday to Thursday: 8 AM - 1 PM, 3 PM - 10 PM\nFriday: Closed\n\nSand branch:\nSaturday to Thursday: 8 AM - 1 PM, 3 PM - 10 PM\nFriday: 3 PM - 10 PM"
+  }
+}

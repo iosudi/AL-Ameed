@@ -1,0 +1,30 @@
+{
+  "validation": {
+    "required": "This field is required",
+    "year": {
+      "min": "Year must be after 1900",
+      "max": "Year can't be in the future",
+      "type": "Year must be a valid number"
+    },
+    "mileage": {
+      "type": "Mileage must be a number",
+      "min": "Mileage cannot be negative"
+    },
+    "engineCapacity": {
+      "type": "Engine capacity must be a number",
+      "range": "Engine capacity must be between 0.6 and 8.0"
+    },
+    "cylinders": {
+      "type": "Cylinders must be a number",
+      "range": "Cylinders must be between 2 and 16"
+    },
+    "seats": {
+      "type": "Seats must be a number",
+      "range": "Seats must be between 1 and 9"
+    },
+    "price": {
+      "type": "Price must be a number",
+      "positive": "Price must be a positive number"
+    }
+  }
+}

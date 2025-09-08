@@ -1,0 +1,9 @@
+{
+  "upholsteryService": {
+    "title": "خدمة التنجيد",
+    "materialNameLabel": "الموديلات المتاحة",
+    "priceLabel": "السعر",
+    "priceCurrency": "د.ب",
+    "availableMaterials": "الخامات المتوفرة"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "upholsteryService": {
+    "title": "Upholstery Service",
+    "materialNameLabel": "Available Models",
+    "priceLabel": "Price",
+    "priceCurrency": "BHD",
+    "availableMaterials": "Available Materials"
+  }
+}

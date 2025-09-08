@@ -1,0 +1,29 @@
+{
+  "cars": {
+    "new": "New Cars",
+    "used": "Used Cars",
+    "rent": "Cars for rent",
+    "rent_to_own": "Rent to own",
+    "all": "Car Gallery"
+  },
+
+  "carsTitle": {
+    "new": "New Cars",
+    "used": "Used Cars",
+    "rent": "Cars for rent",
+    "rent_to_own": "Rent to own",
+    "all": "Cars",
+    "for_sell": "for sale",
+    "car": "car",
+    "summary": "{{type}}  - {{count}} cars"
+  },
+
+  "note": "Note: These images are typical and not actual.",
+  "filter": "Filter results",
+  "reset": "Reset",
+  "sort_placeholder": "Sort by",
+  "highest_price": "Highest price",
+  "lowest_price": "Lowest price",
+  "latest": "Latest",
+  "oldest": "Oldest"
+}

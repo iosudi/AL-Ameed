@@ -1,0 +1,19 @@
+{
+  "UpholsteryHeading": "Upholstery service",
+  "UpholsteryTypes": "Types of upholstery available",
+  "UpholsteryType": "leather upholstery",
+  "features": "Features",
+  "upholstery": {
+    "leather_title": "Leather Upholstery",
+    "leather_description": "Natural leather is considered the ideal choice for those seeking luxury and elegance, offering seats a sophisticated and luxurious appearance that reflects refined taste. It is characterized by its comfortable texture and its ability to adapt to the shape of the body over time, providing a very comfortable sitting experience. It is also resistant to dust and odors, and with proper care, it becomes a long-lasting investment in the world of upholstery.",
+
+    "vinyl_title": "Vinyl Upholstery",
+    "vinyl_description": "Synthetic leather or vinyl is widely popular thanks to its appearance, which closely resembles natural leather, and its ease of cleaning. One of its main advantages is its water resistance, making it highly practical in areas prone to spills or heavy use. It is also available in a wide variety of colors and finishes, allowing easy customization according to taste. It is considered an economical and durable choice for spaces requiring practical performance.",
+
+    "nylon_title": "Nylon Upholstery",
+    "nylon_description": "Nylon is one of the strongest synthetic fibers used in upholstery, known for its high durability and excellent resistance to wear and tear. This makes it an ideal choice for heavily used areas such as public offices, transportation means, or car seats exposed to constant movement. Additionally, nylon resists stains well, retains its shape over time, does not wrinkle easily, and is practical in terms of cleaning and maintenance. Thanks to these properties, nylon is often used in applications requiring high performance and a long lifespan.",
+
+    "polyester_title": "Polyester Upholstery",
+    "polyester_description": "Polyester is one of the most widely used synthetic fabrics in the upholstery world, known for its excellent balance between performance and cost. It resists wrinkles and shrinking, and it doesn't easily wear out with daily use, making it a reliable choice for both household and office furniture. Polyester also retains its color without fading and can be blended with other fibers like cotton or viscose to add extra softness and improve comfort. Thanks to these features, polyester is used in a wide range of designs and colors, providing an elegant look with practical, easy-to-maintain performance."
+  }
+}

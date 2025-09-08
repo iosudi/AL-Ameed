@@ -1,0 +1,16 @@
+{
+  "email_error": "خطأ في البريد الالكتروني",
+  "email_required": "البريد الالكتروني مطلوب",
+  "password_min_length": "كلمة السر يجب ان تكون اطول من 8 حروف",
+  "password_required": "كلمة السر مطلوبة",
+  "success_login": "تم تسجيل الدخول بنجاح",
+  "email_already_exists": "البريد الإلكتروني موجود بالفعل",
+  "unexpected_error": "حدث خطأ غير متوقع",
+  "create_account_user": "إنشاء حساب - مستخدم",
+  "first_name": "الإسم الأول",
+  "last_name": "الإسم الأخير",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "create_account": "إنشاء الحساب",
+  "already_have_account": "لديي حساب بالفعل"
+}

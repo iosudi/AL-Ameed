@@ -1,0 +1,54 @@
+{
+  "navbar": {
+    "home": "Home",
+    "shop": "Car Gallery",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "compareList": "Compare List",
+    "compare": "Compare",
+    "clearAll": "Clear All",
+    "menu": "Menu",
+    "language": "Language",
+    "my_account": "My account",
+    "login": "Login",
+    "register": "Register",
+    "favorites": "Favorites",
+    "dashboard": "Account",
+    "compare_list": "Compare list"
+  },
+
+  "compare_sheet": {
+    "button": "Compare",
+    "title": "Compare menu"
+  },
+
+  "adminNavbar": {
+    "dashboard": "Dashboard",
+    "products_list": "Cars List",
+    "add_product": "Add Car",
+    "staff_vehicles": "Staff Cars",
+    "users": "Users",
+    "sell_requests": "Sell Requests",
+    "rent_requests": "Rent Requests",
+    "rent_to_own_requests": "Rent to Own Requests"
+  },
+
+  "compare_btn": "Compare",
+  "offer_details": "Offer details",
+  "favorite": "Add to favorite",
+  "success_login": "Login successful",
+  "success_delete": "Product has been deleted",
+  "success_rate": "Rating created Successfully",
+  "unauthenticated": "You should be logged in first",
+  "logout": "Logout",
+  "error": "Something went wrong",
+  "yes": "Yes",
+  "no": "No",
+  "next": "Next >",
+  "prev": "< Previous",
+  "submit": "Send",
+  "choose_file": "Choose file",
+  "files_selected": "files selected",
+  "edit": "Edit",
+  "save": "Save"
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Login - {{type}}",
+  "admin": "Admin",
+  "user": "User",
+  "email_label": "email address",
+  "password_label": "password",
+  "login": "Login",
+  "register": "Register",
+  "login_as_admin": "Login as Admin",
+  "have_account": "Already has an account"
+}

@@ -1,0 +1,33 @@
+{
+  "carDetails": {
+    "priceLabel": "Price",
+    "rent": "Rent now",
+    "rent_to_own": "Rent to own",
+    "callNow": "Call now ",
+    "whatsapp": "whatsapp",
+    "compare": "Compare",
+    "favorite": "Add to favorite",
+    "full_screen": "Click here for full screen"
+  },
+  "carInfoHeading": "Car details",
+  "carScanHeading": "Car inspection",
+  "carRate": {
+    "heading": "Rate the car",
+    "label": "Rate",
+    "price": "Price",
+    "comfort": "Comfort",
+    "interior": "Interior Design",
+    "exterior": "Exterior Design",
+    "reliability": "Reliability",
+    "performance": "Performance",
+
+    "form": {
+      "name": "Name",
+      "name_placeholder": "Your full name",
+      "email": "Email",
+      "comment": "Your comment",
+      "comment_placeholder": "Write your comment...",
+      "submit": "Submit"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "navbar": {
+    "home": "الصفحة الرئيسية",
+    "shop": "معرض السيارات",
+    "about": "من نحن؟",
+    "contact": "تواصل معنا",
+    "compareList": "قائمة المقارنة",
+    "compare": "مقارنة",
+    "clearAll": "حذف الكل",
+    "menu": "القائمة",
+    "language": "اللغة",
+    "my_account": "حسابي",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "favorites": "المفضلة",
+    "dashboard": "الحساب",
+    "compare_list": "قائمة المقارنة"
+  },
+
+  "compare_sheet": {
+    "button": "المقارنة",
+    "title": "قائمة المقارنة"
+  },
+
+  "adminNavbar": {
+    "dashboard": "لوحة التحكم",
+    "products_list": "قائمة السيارات",
+    "add_product": "إضافة سيارة",
+    "staff_vehicles": "سيارات الموظفين",
+    "users": "المستخدمين",
+    "sell_requests": "طلبات البيع",
+    "rent_requests": "طلبات الإيجار",
+    "rent_to_own_requests": "طلبات إستأجر لتملك"
+  },
+
+  "compare_btn": "مقارنة",
+  "offer_details": "تفاصيل العرض",
+  "favorite": "أضف إلى المفضلة",
+  "success_login": "تم تسجيل الدخول بنجاح",
+  "success_delete": "تم حذف المنتج ",
+  "success_rate": "تم نشر تعليقك",
+  "unauthenticated": "يجب تسجيل الدخول اولا",
+  "logout": "تسحيل خروج",
+  "error": "حدث خطأ ما",
+  "yes": "نعم",
+  "no": "لا",
+  "next": "التالي >",
+  "prev": "< السابق",
+  "submit": "إرسال",
+  "choose_file": "اختر ملف",
+  "files_selected": "الملفات المختارة",
+  "edit": "تعديل",
+  "save": "حفظ"
+}

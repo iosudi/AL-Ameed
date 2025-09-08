@@ -1,0 +1,71 @@
+{
+  "contract": {
+    "rentalTitle": "Preliminary Contract (Rental)",
+    "rentToOwnTitle": "Preliminary Contract (Rent to Own)",
+    "fillInfo": "We need some information to complete the process"
+  },
+  "steps": {
+    "tenant": "Tenant Information",
+    "upload": "Upload Documents",
+    "carSpecs": "Car Specifications",
+    "duration": "Set Duration",
+    "terms": "Terms and Conditions",
+    "downPrice": "Down Payment",
+    "payment": "Payment"
+  },
+  "carForm": {
+    "firstName": "First Name",
+    "firstNamePlaceholder": "e.g., Mohammed",
+    "middleName": "Middle Name",
+    "middleNamePlaceholder": "e.g., Ahmed",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "e.g., Ali",
+    "nationality": "Nationality",
+    "nationalId": "National ID",
+    "nationalIdPlaceholder": "e.g., 123456789",
+    "phone": "Phone Number",
+    "phonePlaceholder": "e.g., +97312345678",
+    "bahraini": "Bahraini",
+    "egyptian": "Egyptian",
+    "saudi": "Saudi",
+    "idFront": "ID Front Image*",
+    "idBack": "ID Back Image*",
+    "licenseFront": "License Front Image*",
+    "licenseBack": "License Back Image*",
+    "brand": "Brand",
+    "brandPlaceholder": "e.g., Toyota",
+    "selectCar": "Select a car",
+    "selectCarPlaceholder": "search in car for rent",
+    "exteriorColor": "Exterior Color",
+    "interiorColor": "Interior Color",
+    "colorPlaceholder": "e.g., White",
+    "fuelType": "Fuel Type",
+    "fuelPlaceholder": "e.g., Gasoline",
+    "condition": "Condition",
+    "conditionPlaceholder": "e.g., Excellent",
+    "from": "From",
+    "to": "To",
+    "pickDate": "Pick a date"
+  },
+  "rentalTerms": {
+    "title": "Rental Terms and Conditions:",
+    "accept": "I agree to the terms and conditions"
+  },
+  "terms": {
+    "term1": "The renter must be at least 21 years old and must possess a valid driver's license and CPR card from both sides.",
+    "term2": "The booking information must match the renter’s identity to avoid any legal liabilities.",
+    "term3": "A mandatory insurance fee of 50 BHD is applied to each vehicle (ideally displayed automatically in the customer’s total cost with the option to adjust).",
+    "term4": "The customer must specify the number of rental days. An inspection form will be prepared for the customer to sign before vehicle delivery.",
+    "term5": "The vehicle will be photographed upon delivery and re-inspected upon return.",
+    "rentToOwn": "The renter acknowledges that they have reviewed the terms and conditions of the Rent-to-Own program. The agreement stipulates that the vehicle remains the property of the leasing company throughout the contract period and ownership is not transferred to the renter until all due installments are paid, including any remaining agreed amount, if applicable. A non-refundable down payment is required. The renter commits to paying the monthly installments regularly throughout the contract period, which ranges from a minimum of 12 months to a maximum of 60 months, depending on the agreement. The installments may include essential services such as insurance and maintenance if agreed upon. The renter is obligated to use the vehicle legally and safely and is fully responsible for any damages resulting from misuse or negligence. The vehicle must not be used for commercial or illegal purposes without prior permission. If the renter wishes to terminate the contract early, they must pay an early termination fee and return the vehicle in good condition. The down payment and prior installments are non-refundable. Ownership transfer will only occur once all financial and administrative obligations are fulfilled by the renter, including transfer and registration fees with the relevant authorities. The leasing company reserves the right to amend the program’s terms with prior notice to the renter. This contract is subject to the laws and regulations of the Kingdom, and any dispute shall be resolved by the competent judicial authorities."
+  },
+  "buttons": {
+    "back": "Back",
+    "next": "Next",
+    "toPayment": "Proceed to Payment",
+    "finish": "Return to Home Page"
+  },
+  "messages": {
+    "success": "Form submitted successfully!"
+  }
+}

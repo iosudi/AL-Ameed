@@ -1,0 +1,19 @@
+{
+  "title": "Contact Us",
+  "contactUsTitle": "Write to Us",
+  "contactUsText": "If you have any questions or want to know how to use the Aldowaishan Cars website, or if you want to list your car, don’t hesitate to reach out to us — we're here for any inquiries that come to mind.",
+  "googleMaps": "Google Maps",
+  "callUsTitle": "Call Us",
+  "callUsText": "To get the most out of this amazing service, reach out to our customer service department using any of the methods below:",
+  "address": "Riffa Street",
+
+  "form": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "messagePlaceholder": "Write your message here...",
+    "submit": "Send"
+  }
+}

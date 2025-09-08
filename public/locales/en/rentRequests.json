@@ -1,0 +1,9 @@
+{
+  "tenant": "Tenant",
+  "examination_form": "Examination Form",
+  "rent_payment_date": "Rent Payment Date",
+  "inspection_form": "Inspection Form",
+  "highest_views": "Highest Views",
+  "lowest_views": "Lowest Views",
+  "rent_requests": "Rent Requests"
+}

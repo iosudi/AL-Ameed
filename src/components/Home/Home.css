@@ -1,0 +1,17 @@
+.rent-offers-swiper .swiper-pagination {
+  position: relative;
+  margin-top: 2rem;
+}
+.rent-offers-swiper .swiper-pagination-bullet {
+  width: 13px;
+  height: 13px;
+  background-color: #d9d9d9;
+}
+
+.rent-offers-swiper .swiper-pagination-bullet-active {
+  background-color: #d40000;
+}
+
+.testimonials-swiper .swiper-wrapper {
+  max-width: 300px;
+}
