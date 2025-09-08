@@ -8,7 +8,6 @@ export const DashboardNavbar = () => {
 
   // user.permissions should be an array of {id, name, codename, content_type}
   const userPermissions = user?.user_permissions?.map((p: number) => p) || [];
-  console.log(user);
 
   // Define link-permission mapping
   const navLinks = [
@@ -20,12 +19,12 @@ export const DashboardNavbar = () => {
     {
       path: "/products-list",
       label: t("adminNavbar.products_list"),
-      requiredPerms: [144],
+      requiredPerms: [],
     },
     {
       path: "/add-product",
       label: t("adminNavbar.add_product"),
-      requiredPerms: [144],
+      requiredPerms: [],
     },
     {
       path: "/staff-cars",

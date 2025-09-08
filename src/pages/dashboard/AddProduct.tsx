@@ -33,6 +33,12 @@ import { BsGlobe2 } from "react-icons/bs";
 import { useInView } from "react-intersection-observer";
 import * as Yup from "yup";
 
+const PERMISSION_IDS = {
+  RENT_TO_OWN: 185,
+  VIEW_RENTAL: 176,
+  VIEW_CAR_LISTING: 144,
+} as const;
+
 interface Day {
   id: number;
   value: string | number;
@@ -70,8 +76,46 @@ const validationKeys = {
   },
 };
 
+const getAvailableVehicleTypes = (
+  userPermissions: number[],
+  isSuperuser: boolean,
+  t: (key: string) => string
+) => {
+  if (isSuperuser) {
+    return [
+      { value: "used", label: t("addProduct:used") },
+      { value: "new", label: t("addProduct:new") },
+      { value: "rent", label: t("addProduct:for_rent") },
+      { value: "rent_to_own", label: t("addProduct:rent_to_own") },
+    ];
+  }
+
+  const availableTypes = [];
+
+  // Check permissions and add corresponding types
+  if (userPermissions.includes(PERMISSION_IDS.VIEW_CAR_LISTING)) {
+    availableTypes.push(
+      { value: "used", label: t("addProduct:used") },
+      { value: "new", label: t("addProduct:new") }
+    );
+  }
+
+  if (userPermissions.includes(PERMISSION_IDS.VIEW_RENTAL)) {
+    availableTypes.push({ value: "rent", label: t("addProduct:for_rent") });
+  }
+
+  if (userPermissions.includes(PERMISSION_IDS.RENT_TO_OWN)) {
+    availableTypes.push({
+      value: "rent_to_own",
+      label: t("addProduct:rent_to_own"),
+    });
+  }
+
+  return availableTypes;
+};
+
 export const AddProduct = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
 
   const { t, i18n } = useTranslation([
     NAMESPACES.addProduct,
@@ -222,6 +266,29 @@ export const AddProduct = () => {
       handleSubmit(formData);
     },
   });
+
+  const availableVehicleTypes = getAvailableVehicleTypes(
+    user?.user_permissions || [],
+    user?.is_superuser || false,
+    t
+  );
+  const hasOnlyOneType = availableVehicleTypes.length === 1;
+  const isCarListingOnly =
+    availableVehicleTypes.length === 2 &&
+    availableVehicleTypes.every(
+      (type) => type.value === "used" || type.value === "new"
+    );
+
+  useEffect(() => {
+    if (
+      hasOnlyOneType &&
+      !isCarListingOnly &&
+      availableVehicleTypes[0] &&
+      !formik.values.type
+    ) {
+      formik.setFieldValue("type", availableVehicleTypes[0].value);
+    }
+  }, [hasOnlyOneType, isCarListingOnly, availableVehicleTypes]);
 
   useEffect(() => {
     console.log(brands);
@@ -393,42 +460,57 @@ export const AddProduct = () => {
             <form className="mt-8" onSubmit={formik.handleSubmit}>
               <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
                 <div>
-                  <Label className="mb-2 text-base" htmlFor="email">
+                  <Label className="mb-2 text-base" htmlFor="type">
                     {t("addProduct:tags")}
                     <span className="text-red-700">*</span>
                   </Label>
-                  <Select
-                    onValueChange={(value) => {
-                      formik.setFieldValue("type", value);
-                    }}
-                    dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                  >
-                    <SelectTrigger className="w-full py-5 sm:text-xl rounded-lg cursor-pointer">
-                      <SelectValue placeholder={t("addProduct:used-new")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="used">
-                        <Badge variant={"default"} className="bg-[#B71616]">
-                          {t("addProduct:used")}
-                        </Badge>
-                      </SelectItem>
-                      <SelectItem value="new">
-                        <Badge variant={"default"} className="bg-[#B71616]">
-                          {t("addProduct:new")}
-                        </Badge>
-                      </SelectItem>
-                      <SelectItem value="rent">
-                        <Badge variant={"default"} className="bg-[#B71616]">
-                          {t("addProduct:for_rent")}
-                        </Badge>
-                      </SelectItem>
-                      <SelectItem value="rent_to_own">
-                        <Badge variant={"default"} className="bg-[#B71616]">
-                          {t("addProduct:rent_to_own")}
-                        </Badge>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+
+                  {/* Show select dropdown only if user has multiple options or car listing permission */}
+                  {!hasOnlyOneType || isCarListingOnly ? (
+                    <Select
+                      onValueChange={(value) => {
+                        formik.setFieldValue("type", value);
+                      }}
+                      value={formik.values.type}
+                      dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                    >
+                      <SelectTrigger className="w-full py-5 sm:text-xl rounded-lg cursor-pointer">
+                        <SelectValue placeholder={t("addProduct:used-new")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {availableVehicleTypes.map((type) => (
+                          <SelectItem key={type.value} value={type.value}>
+                            <Badge variant={"default"} className="bg-[#B71616]">
+                              {type.label}
+                            </Badge>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    /* Show disabled input for single permission (except car listing) */
+                    <div className="relative">
+                      <Input
+                        className="bg-gray-100 border-gray-300 py-5 rounded-lg cursor-not-allowed"
+                        value={availableVehicleTypes[0]?.label || ""}
+                        disabled
+                        readOnly
+                      />
+                      <Badge
+                        variant={"default"}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-[#B71616]"
+                      >
+                        {availableVehicleTypes[0]?.label}
+                      </Badge>
+                    </div>
+                  )}
+
+                  {/* Show error message if no permissions */}
+                  {availableVehicleTypes.length === 0 && (
+                    <p className="text-red-700 mt-2">
+                      {t("addProduct:no_permissions")}
+                    </p>
+                  )}
 
                   {formik.touched.type && formik.errors.type && (
                     <p className="text-red-700">{formik.errors.type}</p>

@@ -27,6 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useAuth } from "@/context/AuthContext";
 import { useVehicles } from "@/hooks/useVehicles";
 import { Vehicles } from "@/interfaces/Vehicles";
 import { NAMESPACES } from "@/translations/namespaces";
@@ -44,8 +45,44 @@ export function DataTable() {
   const [currentPage, setCurrentPage] = React.useState(0);
   const offset = currentPage * 5;
   const limit = 5;
-  const params = {};
-  const { data } = useVehicles({}, offset, limit);
+  const { user } = useAuth();
+
+  // Function to determine type filters based on user permissions
+  const getTypeFilters = React.useMemo(() => {
+    if (user?.is_superuser) {
+      return {}; // No type filter for superuser - shows all
+    }
+
+    if (!user?.user_permissions || user.user_permissions.length === 0) {
+      return {}; // No permissions, no filter
+    }
+
+    const permissions = user.user_permissions;
+    const typeFilters: string[] = [];
+
+    // Check for specific permissions and add corresponding filters
+    if (permissions.includes(185)) {
+      // Rent to own permission
+      typeFilters.push("rent_to_own");
+    }
+
+    if (permissions.includes(176)) {
+      // Can view rental permission
+      typeFilters.push("rent");
+    }
+
+    if (permissions.includes(144)) {
+      // Can view car listing permission
+      typeFilters.push("new", "used");
+    }
+
+    // If user has type filters, return them as a comma-separated string
+    // Otherwise return empty object (no type filter)
+    return typeFilters.length > 0 ? { type: typeFilters.join(",") } : {};
+  }, [user]);
+
+  const params = getTypeFilters;
+  const { data } = useVehicles(params, offset, limit);
   const columns = useProductColumns({ params, offset, limit });
   const columnsLength = columns.length;
 

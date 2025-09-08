@@ -11,7 +11,7 @@
     "duration": "Set Duration",
     "terms": "Terms and Conditions",
     "downPrice": "Down Payment",
-    "payment": "Payment"
+    "payment": "Completion"
   },
   "carForm": {
     "firstName": "First Name",
@@ -63,7 +63,7 @@
     "back": "Back",
     "next": "Next",
     "toPayment": "Proceed to Payment",
-    "finish": "Return to Home Page"
+    "finish": "Send the request"
   },
   "messages": {
     "success": "Form submitted successfully!"
