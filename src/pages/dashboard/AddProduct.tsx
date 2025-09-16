@@ -1138,6 +1138,8 @@ export const AddProduct = () => {
                   <FileUpload
                     label={t("addProduct:other_photos")}
                     multiple
+                    accept="image/*"
+                    isCreateProduct
                     onChange={(files) => {
                       if (files) {
                         if (files instanceof FileList) {
@@ -1146,14 +1148,13 @@ export const AddProduct = () => {
                           );
                           setOtherImages(validFiles);
                         } else if (files instanceof File) {
-                          // If single file passed, wrap it in an array
                           setOtherImages([files]);
                         }
                       } else {
                         setOtherImages([]);
                       }
                     }}
-                    value={otherImages} // Pass the array of files as value
+                    value={otherImages}
                   />
                 </div>
               </div>
