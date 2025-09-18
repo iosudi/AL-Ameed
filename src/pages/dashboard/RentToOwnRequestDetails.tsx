@@ -344,14 +344,16 @@ export default function RentRequestDetails() {
                 </div>
 
                 <div>
-                  <a
-                    href={`${requestDetails?.inspection_form}`}
-                    target="_blank"
-                  >
-                    <Button className="w-full" variant={"secondary"}>
-                      {t("rentRequestDetails:inspectionForm")}
-                    </Button>
-                  </a>
+                  {requestDetails?.inspection_form && (
+                    <a
+                      href={`${requestDetails?.inspection_form}`}
+                      target="_blank"
+                    >
+                      <Button className="w-full" variant={"secondary"}>
+                        {t("rentRequestDetails:inspectionForm")}
+                      </Button>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
