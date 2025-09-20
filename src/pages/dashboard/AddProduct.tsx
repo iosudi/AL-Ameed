@@ -6,8 +6,21 @@ import DaySelector from "@/components/Dashboard/DaySelector";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
@@ -21,12 +34,12 @@ import { useAuth } from "@/context/AuthContext";
 import { getBodyTypes, getColors } from "@/data/carDetails";
 import { useCarBrandsInfinite } from "@/hooks/useBrands";
 import { useCarFeatures } from "@/hooks/useFeature";
-import { Brands } from "@/interfaces/Brands";
 import { Feature } from "@/interfaces/Feature";
+import { cn } from "@/lib/utils";
 import { NAMESPACES } from "@/translations/namespaces";
 import axios from "axios";
 import { useFormik } from "formik";
-import { Loader2, Plus } from "lucide-react";
+import { CheckIcon, ChevronsUpDownIcon, Loader2, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -135,6 +148,7 @@ export const AddProduct = () => {
 
   const allBrands = brands?.pages.flatMap((page) => page.results) || [];
 
+  const [open, setOpen] = useState(false);
   const [days, setDays] = useState<Day[]>([]);
 
   const body_type = getBodyTypes(currentLanguage);
@@ -556,45 +570,86 @@ export const AddProduct = () => {
                 </div>
 
                 <div>
-                  <Label className="mb-2 text-base" htmlFor="email">
+                  <label className="mb-2 text-base block">
                     {t("addProduct:brand")}
                     <span className="text-red-700">*</span>
-                  </Label>
-                  <Select
-                    onValueChange={(value) =>
-                      formik.setFieldValue("brand", value)
-                    }
-                    dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                  >
-                    <SelectTrigger className="w-full py-5 sm:text-xl rounded-lg cursor-pointer">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="">
-                      {allBrands.map((brand: Brands) => (
-                        <SelectItem key={brand.id} value={brand.id.toString()}>
-                          {brand.name}
-                        </SelectItem>
-                      ))}
-                      {/* Loading indicator at the bottom */}
-                      <div ref={ref} className="py-2 text-center">
-                        {isFetchingNextPage ? (
-                          <div className="text-sm text-gray-500">
-                            Loading more brands...
+                  </label>
+
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={open}
+                        dir={i18n.language === "ar" ? "rtl" : "ltr"}
+                        className="w-full justify-between py-5 sm:text-xl rounded-lg"
+                      >
+                        {formik.values.brand?.toString()
+                          ? allBrands.find(
+                              (b) =>
+                                b.id.toString() ===
+                                formik.values.brand?.toString()
+                            )?.name
+                          : ""}
+                        <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+
+                    <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+                      <Command>
+                        <CommandInput placeholder={"search.."} />
+                        <CommandList>
+                          <CommandEmpty>
+                            {t("addProduct:noBrandFound")}
+                          </CommandEmpty>
+
+                          <CommandGroup>
+                            {allBrands.map((brand) => (
+                              <CommandItem
+                                className="text-black"
+                                key={brand.id}
+                                // ✅ use brand.name for searching
+                                value={brand.name.toLowerCase()}
+                                onSelect={() => {
+                                  formik.setFieldValue(
+                                    "brand",
+                                    brand.id.toString()
+                                  );
+                                  setOpen(false);
+                                }}
+                              >
+                                <CheckIcon
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    formik.values.brand?.toString() ===
+                                      brand.id.toString()
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {brand.name}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+
+                          {/* Infinite scroll footer */}
+                          <div
+                            ref={ref}
+                            className="py-2 text-center text-sm text-gray-500"
+                          >
+                            {isFetchingNextPage
+                              ? "Loading more brands..."
+                              : hasNextPage
+                              ? "Scroll to load more"
+                              : "No more brands"}
                           </div>
-                        ) : hasNextPage ? (
-                          <div className="text-sm text-gray-500">
-                            Scroll to load more
-                          </div>
-                        ) : (
-                          <div className="text-sm text-gray-500">
-                            No more brands
-                          </div>
-                        )}
-                      </div>
-                    </SelectContent>
-                  </Select>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+
                   {formik.touched.brand && formik.errors.brand && (
-                    <p className="text-red-700">{formik.errors.brand}</p>
+                    <p className="text-red-700 mt-1">{formik.errors.brand}</p>
                   )}
                 </div>
 
