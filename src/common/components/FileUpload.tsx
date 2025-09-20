@@ -56,6 +56,23 @@ const FileUpload: React.FC<FileUploadProps> = ({
     }
   }, [selectedFiles, isImageUpload]);
 
+  // Move a specific image to the start of the array
+  const setAsCover = (index: number) => {
+    const updatedFiles = [
+      selectedFiles[index], // cover photo goes first
+      ...selectedFiles.filter((_, i) => i !== index),
+    ];
+    setSelectedFiles(updatedFiles);
+
+    if (multiple) {
+      const dataTransfer = new DataTransfer();
+      updatedFiles.forEach((file) => dataTransfer.items.add(file));
+      onChange(dataTransfer.files);
+    } else {
+      onChange(updatedFiles[0] || null);
+    }
+  };
+
   // Handle new file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = Array.from(e.target.files || []);
@@ -121,6 +138,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 alt={`preview-${index}`}
                 className="w-full h-full object-cover"
               />
+
               {/* Delete button */}
               <button
                 type="button"
@@ -129,6 +147,24 @@ const FileUpload: React.FC<FileUploadProps> = ({
               >
                 <TbX className="w-4 h-4" />
               </button>
+
+              {/* ✅ Cover button */}
+              {multiple && index !== 0 && (
+                <button
+                  type="button"
+                  onClick={() => setAsCover(index)}
+                  className="absolute bottom-1 left-1 px-2 py-1 text-xs bg-yellow-500 hover:bg-yellow-600 text-white rounded transition-colors"
+                >
+                  Set as Cover
+                </button>
+              )}
+
+              {/* Optional indicator if it's the cover */}
+              {index === 0 && (
+                <span className="absolute bottom-1 left-1 px-2 py-1 text-xs bg-green-600 text-white rounded">
+                  Cover
+                </span>
+              )}
             </div>
           ))}
 

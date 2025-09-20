@@ -1,3 +1,5 @@
+
+// axiosInstance.ts
 import axios from "axios";
 import authService from "./authService/authService";
 
@@ -10,7 +12,8 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const token = authService.getAccessToken();
     if (token) {
-      config.headers["Authorization"] = `JWT ${token}`;
+      // Fixed: Use consistent token format (Bearer instead of JWT)
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
@@ -22,18 +25,29 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+
+    // Handle 401 errors (expired/invalid token)
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
+
       try {
         await authService.refreshToken();
         const newAccessToken = authService.getAccessToken();
-        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        return axiosInstance(originalRequest);
+        if (newAccessToken) {
+          originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+          return axiosInstance(originalRequest);
+        }
       } catch (refreshError) {
-        authService.logout(); // Optional: force logout if refresh fails
+        // If refresh fails, logout user and redirect to login
+        authService.logout();
+        // Optionally redirect to login page
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login';
+        }
         return Promise.reject(refreshError);
       }
     }
+
     return Promise.reject(error);
   }
 );

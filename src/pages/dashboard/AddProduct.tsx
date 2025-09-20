@@ -24,6 +24,7 @@ import { useCarFeatures } from "@/hooks/useFeature";
 import { Brands } from "@/interfaces/Brands";
 import { Feature } from "@/interfaces/Feature";
 import { NAMESPACES } from "@/translations/namespaces";
+import axios from "axios";
 import { useFormik } from "formik";
 import { Loader2, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -314,6 +315,16 @@ export const AddProduct = () => {
       });
       toast.success("Product created successfully");
     } catch (err) {
+      if (axios.isAxiosError(err)) {
+        // ✅ Check for HTTP 413
+        if (err.code === "ERR_NETWORK") {
+          toast.error("⚠️ File is too large. Please upload a smaller file.");
+        } else {
+          toast.error("Upload failed. Please try again.");
+        }
+      } else {
+        toast.error("Unexpected error occurred.");
+      }
       console.error(" error:", err);
     } finally {
       formik.setSubmitting(false);
