@@ -16,9 +16,9 @@ import {
   TableRow,
 } from "../ui/table";
 import DigitalSignature from "./DigitalSignature";
-
+import axiosInstance from "@/api/axiosInstance";
 interface CarRentsPayProps {
-  examinationFormImage?: string; // URL or base64 of examination form image
+  examinationFormImage?: string;
   onSignatureSubmit?: (signatureData: string) => Promise<void>;
   installments: Installment[];
 }
@@ -56,7 +56,34 @@ export default function CarRentsPay({
     setIsSigningMode(false);
   };
 
-  // If in signing mode, show the digital signature component
+  // 🧾 Handle payment button click
+  const handlePaymentClick = async (installmentId: number) => {
+    try {
+      toast.loading("Getting payment link...");
+      const response = await axiosInstance.post('/wallets/payment/create/');
+      console.log("Payment response:", response);
+
+      if (response.status != 200) {
+        throw new Error("Failed to get payment link");
+      }
+
+      const data = await response.data;
+      console.log("Payment data:", data.value);
+
+      if (data.payment_url) {
+        toast.dismiss();
+        toast.success("Redirecting to payment...");
+        window.location.href = data.payment_url; // Redirect user
+      } else {
+        toast.error("No payment link received");
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      toast.dismiss();
+      toast.error("Unable to get payment link");
+    }
+  };
+
   if (isSigningMode && examinationFormImage) {
     return (
       <DigitalSignature
@@ -68,10 +95,8 @@ export default function CarRentsPay({
     );
   }
 
-  // Default view with payment table and examination form
   return (
     <div className="space-y-6">
-      {/* Examination Form Image */}
       {examinationFormImage && (
         <div className="text-center">
           <img
@@ -82,7 +107,6 @@ export default function CarRentsPay({
         </div>
       )}
 
-      {/* Payment Table */}
       <Table>
         <TableHeader>
           <TableRow>
@@ -94,7 +118,7 @@ export default function CarRentsPay({
         </TableHeader>
         <TableBody>
           {installments.map((installment: Installment) => (
-            <TableRow>
+            <TableRow key={installment.id}>
               <TableCell className="text-center">
                 {formatDate(installment.due_date, i18n.language)}
               </TableCell>
@@ -124,6 +148,8 @@ export default function CarRentsPay({
                   size={"icon"}
                   variant={"outline"}
                   className="justify-self-center"
+                  onClick={() => handlePaymentClick(installment.id)}
+                  disabled={installment.is_paid}
                 >
                   <GiReceiveMoney className="size-6" />
                 </Button>
@@ -133,7 +159,6 @@ export default function CarRentsPay({
         </TableBody>
       </Table>
 
-      {/* Sign Form Button */}
       {examinationFormImage && onSignatureSubmit && (
         <div className="flex justify-center pt-4">
           <Button
