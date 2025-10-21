@@ -1,0 +1,8 @@
+{
+  "payment": {
+    "title": "Complete Your Payment",
+    "description": "You're almost done! Click the button below to proceed to our secure payment gateway.",
+    "button": "Proceed to Payment",
+    "secure": "Secure payment processing"
+  }
+}
