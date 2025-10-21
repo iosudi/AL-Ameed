@@ -795,6 +795,7 @@ export const EditProduct = () => {
                   /> */}
 
                   <FileUpload
+                    accept="image/*"
                     label={t("addProduct:other_photos")}
                     multiple
                     onChange={(files) => {

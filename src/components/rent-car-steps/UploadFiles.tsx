@@ -12,6 +12,7 @@ export const UploadFiles = () => {
     <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 mb-4">
       <div>
         <FileUpload
+          accept="image/*"
           label={t("carForm.idFront")}
           onChange={(files) => {
             if (files && !(files instanceof FileList)) {
@@ -24,6 +25,7 @@ export const UploadFiles = () => {
 
       <div>
         <FileUpload
+          accept="image/*"
           label={t("carForm.idBack")}
           onChange={(files) => {
             if (files && !(files instanceof FileList)) {
@@ -36,6 +38,7 @@ export const UploadFiles = () => {
 
       <div>
         <FileUpload
+          accept="image/*"
           label={t("carForm.licenseFront")}
           onChange={(files) => {
             if (files && !(files instanceof FileList)) {
@@ -48,6 +51,7 @@ export const UploadFiles = () => {
 
       <div>
         <FileUpload
+          accept="image/*"
           label={t("carForm.licenseBack")}
           onChange={(files) => {
             if (files && !(files instanceof FileList)) {

@@ -28,12 +28,20 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const isImageUpload = accept?.includes("image");
 
-  // ✅ Manage files and previews separately for better control
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
 
-  // Initialize files from value prop
+  // ✅ Only sync from value prop on initial mount or when value actually changes from parent
+  // Use a ref to track if we've set files internally to avoid overriding local changes
+  const isInternalUpdate = useRef(false);
+
   useEffect(() => {
+    // Skip if this was an internal update
+    if (isInternalUpdate.current) {
+      isInternalUpdate.current = false;
+      return;
+    }
+
     if (value) {
       const files = Array.isArray(value) ? value : [value];
       setSelectedFiles(files);
@@ -45,6 +53,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
   // Update previews when files change
   useEffect(() => {
     if (isImageUpload && selectedFiles.length > 0) {
+      console.log(selectedFiles);
+
       const objectUrls = selectedFiles.map((file) => URL.createObjectURL(file));
       setPreviews(objectUrls);
 
@@ -59,9 +69,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
   // Move a specific image to the start of the array
   const setAsCover = (index: number) => {
     const updatedFiles = [
-      selectedFiles[index], // cover photo goes first
+      selectedFiles[index],
       ...selectedFiles.filter((_, i) => i !== index),
     ];
+
+    isInternalUpdate.current = true;
     setSelectedFiles(updatedFiles);
 
     if (multiple) {
@@ -78,22 +90,20 @@ const FileUpload: React.FC<FileUploadProps> = ({
     const newFiles = Array.from(e.target.files || []);
 
     if (multiple) {
-      // Add new files to existing ones
       const updatedFiles = [...selectedFiles, ...newFiles];
+      isInternalUpdate.current = true;
       setSelectedFiles(updatedFiles);
 
-      // Create FileList-like object for onChange
       const dataTransfer = new DataTransfer();
       updatedFiles.forEach((file) => dataTransfer.items.add(file));
       onChange(dataTransfer.files);
     } else {
-      // Single file mode
       const file = newFiles[0] || null;
+      isInternalUpdate.current = true;
       setSelectedFiles(file ? [file] : []);
       onChange(file);
     }
 
-    // Reset input value to allow selecting the same file again
     e.target.value = "";
   };
 
@@ -102,13 +112,14 @@ const FileUpload: React.FC<FileUploadProps> = ({
     const updatedFiles = selectedFiles.filter(
       (_, index) => index !== indexToRemove
     );
+
+    isInternalUpdate.current = true;
     setSelectedFiles(updatedFiles);
 
     if (multiple) {
       if (updatedFiles.length === 0) {
         onChange(null);
       } else {
-        // Create FileList-like object
         const dataTransfer = new DataTransfer();
         updatedFiles.forEach((file) => dataTransfer.items.add(file));
         onChange(dataTransfer.files);
@@ -125,75 +136,91 @@ const FileUpload: React.FC<FileUploadProps> = ({
         {required && <span className="text-red-700">*</span>}
       </Label>
 
-      {/* ✅ Create Product Mode → show images in boxes with delete option */}
-      {isCreateProduct && isImageUpload && previews.length > 0 ? (
-        <div className="flex flex-wrap gap-3">
-          {previews.map((src, index) => (
-            <div
-              key={index}
-              className="relative w-32 h-32 rounded-lg border border-[#d40000] overflow-hidden flex items-center justify-center bg-gray-100"
-            >
-              <img
-                src={src}
-                alt={`preview-${index}`}
-                className="w-full h-full object-cover"
-              />
-
-              {/* Delete button */}
-              <button
-                type="button"
-                onClick={() => removeFile(index)}
-                className="absolute top-1 right-1 w-6 h-6 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors"
-              >
-                <TbX className="w-4 h-4" />
-              </button>
-
-              {/* ✅ Cover button */}
-              {multiple && index !== 0 && (
-                <button
-                  type="button"
-                  onClick={() => setAsCover(index)}
-                  className="absolute bottom-1 left-1 px-2 py-1 text-xs bg-yellow-500 hover:bg-yellow-600 text-white rounded transition-colors"
+      {isImageUpload && previews.length > 0 ? (
+        <>
+          {multiple || isCreateProduct ? (
+            <div className="flex flex-wrap gap-3">
+              {previews.map((src, index) => (
+                <div
+                  key={index}
+                  className="relative w-32 h-32 rounded-lg border border-[#d40000] overflow-hidden flex items-center justify-center bg-gray-100"
                 >
-                  Set as Cover
-                </button>
-              )}
+                  <img
+                    src={src}
+                    alt={`preview-${index}`}
+                    className="w-full h-full object-cover"
+                  />
 
-              {/* Optional indicator if it's the cover */}
-              {index === 0 && (
-                <span className="absolute bottom-1 left-1 px-2 py-1 text-xs bg-green-600 text-white rounded">
-                  Cover
-                </span>
+                  <button
+                    type="button"
+                    onClick={() => removeFile(index)}
+                    className="absolute top-1 right-1 w-6 h-6 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors"
+                  >
+                    <TbX className="w-4 h-4" />
+                  </button>
+
+                  {multiple && index !== 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setAsCover(index)}
+                      className="absolute bottom-1 left-1 px-2 py-1 text-xs bg-yellow-500 hover:bg-yellow-600 text-white rounded transition-colors"
+                    >
+                      Set as Cover
+                    </button>
+                  )}
+
+                  {index === 0 && multiple && (
+                    <span className="absolute bottom-1 left-1 px-2 py-1 text-xs bg-green-600 text-white rounded">
+                      Cover
+                    </span>
+                  )}
+                </div>
+              ))}
+
+              {multiple && (
+                <div
+                  className="w-32 h-32 rounded-lg border-2 border-dashed border-[#d40000] flex items-center justify-center bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors"
+                  onClick={() => inputRef.current?.click()}
+                >
+                  <div className="flex flex-col items-center gap-1">
+                    <TbCamera className="w-8 h-8 text-[#d40000]" />
+                  </div>
+                </div>
               )}
             </div>
-          ))}
+          ) : (
+            <div className="relative w-full max-w-md">
+              <div className="relative w-full h-64 rounded-lg border border-[#d40000] overflow-hidden flex items-center justify-center bg-gray-100">
+                <img
+                  src={previews[0]}
+                  alt="preview"
+                  className="w-full h-full object-contain"
+                />
 
-          {/* Add more button for multiple files */}
-          {multiple && (
-            <div
-              className="w-32 h-32 rounded-lg border-2 border-dashed border-[#d40000] flex items-center justify-center bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors"
-              onClick={() => inputRef.current?.click()}
-            >
-              <div className="flex flex-col items-center gap-1">
-                <TbCamera className="w-8 h-8 text-[#d40000]" />
+                <button
+                  type="button"
+                  onClick={() => removeFile(0)}
+                  className="absolute top-2 right-2 w-8 h-8 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors"
+                >
+                  <TbX className="w-5 h-5" />
+                </button>
               </div>
             </div>
           )}
-        </div>
+        </>
       ) : (
-        /* Default box if no image selected */
         <div
-          className="w-50 h-40 flex items-center justify-center p-5 rounded-lg border border-[#d40000] cursor-pointer"
+          className="w-50 h-40 flex items-center justify-center p-5 rounded-lg border border-[#d40000] cursor-pointer hover:bg-gray-50 transition-colors"
           onClick={() => inputRef.current?.click()}
         >
           <div className="flex flex-col items-center gap-2">
             {isImageUpload ? (
-              <TbCamera className="size-17 text-white" />
+              <TbCamera className="size-17 text-[#d40000]" />
             ) : (
-              <TbFileUpload className="size-17 text-white" />
+              <TbFileUpload className="size-17 text-[#d40000]" />
             )}
             {isImageUpload && (
-              <p className="text-white text-sm text-center">
+              <p className="text-[#d40000] text-sm text-center">
                 {t("choose_file")}
               </p>
             )}
@@ -201,7 +228,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
         </div>
       )}
 
-      {/* ✅ Button to select files */}
       <Button
         type="button"
         className="px-2 py-1 h-auto"
@@ -209,6 +235,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
       >
         {multiple && selectedFiles.length > 0
           ? t("add_more_files") || "Add More Files"
+          : previews.length > 0
+          ? t("change_file") || "Change File"
           : t("choose_file")}
       </Button>
 
