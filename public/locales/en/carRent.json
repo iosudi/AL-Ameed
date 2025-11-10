@@ -45,7 +45,9 @@
     "conditionPlaceholder": "e.g., Excellent",
     "from": "From",
     "to": "To",
-    "pickDate": "Pick a date"
+    "pickDate": "Pick a date",
+    "additionalDetails": "Additional Details (Optional)",
+    "additionalDetailsPlaceholder": "Write any additional details about the car..."
   },
   "rentalTerms": {
     "title": "Rental Terms and Conditions:",

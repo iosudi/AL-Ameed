@@ -45,7 +45,9 @@
     "conditionPlaceholder": "مثال: ممتازة",
     "from": "من",
     "to": "إلى",
-    "pickDate": "اختر تاريخاً"
+    "pickDate": "اختر تاريخاً",
+    "additionalDetails": "تفاصيل إضافية (اختياري)",
+    "additionalDetailsPlaceholder": "اكتب أي تفاصيل إضافية عن السيارة..."
   },
   "rentalTerms": {
     "title": "شروط وأحكام الاستئجار:",
