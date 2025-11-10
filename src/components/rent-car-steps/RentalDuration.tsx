@@ -54,7 +54,6 @@ export const RentalDuration = () => {
                 today.setHours(0, 0, 0, 0);
                 return date < today;
               }}
-              initialFocus
             />
           </PopoverContent>
         </Popover>
