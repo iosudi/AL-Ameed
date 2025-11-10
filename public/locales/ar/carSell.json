@@ -39,6 +39,8 @@
     "email": "البريد الإلكتروني (إن وجد)",
     "emailPlaceholder": "example@email.com",
     "price": "السعر",
-    "pricePlaceholder": "السعر اللي في بالك"
+    "pricePlaceholder": "السعر اللي في بالك",
+    "additionalDetails": "تفاصيل إضافية (اختياري)",
+    "additionalDetailsPlaceholder": "اكتب أي تفاصيل إضافية عن السيارة..."
   }
 }

@@ -39,6 +39,8 @@
     "email": "Email (optional)",
     "emailPlaceholder": "example@email.com",
     "price": "Price",
-    "pricePlaceholder": "The price you want"
+    "pricePlaceholder": "The price you want",
+    "additionalDetails": "Additional Details (Optional)",
+    "additionalDetailsPlaceholder": "Write any additional details about the car..."
   }
 }

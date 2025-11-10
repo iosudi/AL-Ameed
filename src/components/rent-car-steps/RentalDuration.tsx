@@ -18,7 +18,7 @@ export const RentalDuration = () => {
     <div className="grid grid-cols-2 sm:gap-16 gap-4 mb-4">
       <div>
         <Label className="mb-2" htmlFor="fromDate">
-          {t("carForm.from")}*
+          {t("carForm.from")}
         </Label>
         <Popover>
           <PopoverTrigger asChild>
@@ -49,6 +49,11 @@ export const RentalDuration = () => {
                   date ? format(date, "yyyy-MM-dd") : ""
                 )
               }
+              disabled={(date) => {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                return date < today;
+              }}
               initialFocus
             />
           </PopoverContent>
@@ -62,7 +67,7 @@ export const RentalDuration = () => {
 
       <div>
         <Label className="mb-2" htmlFor="toDate">
-          {t("carForm.to")}*
+          {t("carForm.to")}
         </Label>
         <Popover>
           <PopoverTrigger asChild>
@@ -91,6 +96,15 @@ export const RentalDuration = () => {
                   date ? format(date, "yyyy-MM-dd") : ""
                 )
               }
+              disabled={(date) => {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                if (date < today) return true;
+                if (values.start_date) {
+                  return date <= new Date(values.start_date);
+                }
+                return false;
+              }}
               initialFocus
             />
           </PopoverContent>

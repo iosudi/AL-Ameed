@@ -44,6 +44,7 @@ export const SellCar = () => {
     uploaded_images: null,
     price: "",
     price_negotiable: "true",
+    additional_details: "",
   };
 
   //   const validationSchemas = [

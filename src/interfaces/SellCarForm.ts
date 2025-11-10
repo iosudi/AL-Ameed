@@ -15,4 +15,5 @@ export interface SellCarForm {
     uploaded_images: null | File[],
     price: string,
     price_negotiable: string,
+    additional_details?: string,
 }

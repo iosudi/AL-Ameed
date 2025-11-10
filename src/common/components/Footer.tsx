@@ -114,7 +114,7 @@ export const Footer = () => {
           <span className="flex items-center gap-4">
             <img src="/company_logo.svg" alt="Bcaitech" />
             <span>
-              Powred By <br /> Bcaitech
+              {t("footer.poweredBy")} <br /> Bcaitech
             </span>
           </span>
         </a>

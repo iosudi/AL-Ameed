@@ -25,30 +25,24 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
     // Step 0: TenantInformation
     Yup.object().shape({
       customer_data: Yup.object().shape({
-        first_name: Yup.string().required("First name is required"),
-        middle_name: Yup.string().required("Middle name is required"),
-        last_name: Yup.string().required("Last name is required"),
+        first_name: Yup.string(),
+        middle_name: Yup.string(),
+        last_name: Yup.string(),
         phone_number: Yup.string()
-          .matches(/^\+?\d{7,15}$/, "Enter a valid phone number")
-          .required("Phone number is required"),
+          .matches(/^\+?\d{7,15}$/, "Enter a valid phone number"),
         id_number: Yup.string()
-          .matches(/^\d{10}$/, "ID must be 10 digits")
-          .required("ID number is required"),
-        nationality: Yup.string().required("Nationality is required"),
+          .matches(/^\d{10}$/, "ID must be 10 digits"),
+        nationality: Yup.string(),
       }),
     }),
 
     // Step 1: UploadFiles
     Yup.object().shape({
       customer_data: Yup.object().shape({
-        license_front_photo: Yup.mixed().required(
-          "License front photo is required"
-        ),
-        license_back_photo: Yup.mixed().required(
-          "License back photo is required"
-        ),
-        id_front_photo: Yup.mixed().required("ID front photo is required"),
-        id_back_photo: Yup.mixed().required("ID back photo is required"),
+        license_front_photo: Yup.mixed(),
+        license_back_photo: Yup.mixed(),
+        id_front_photo: Yup.mixed(),
+        id_back_photo: Yup.mixed(),
       }),
     }),
 
@@ -57,13 +51,11 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
       ? [
           Yup.object().shape({
             start_date: Yup.string()
-              .required("Start date is required")
               .matches(
                 /^\d{4}-\d{2}-\d{2}$/,
                 "Invalid date format (YYYY-MM-DD)"
               ),
             end_date: Yup.string()
-              .required("End date is required")
               .matches(
                 /^\d{4}-\d{2}-\d{2}$/,
                 "Invalid date format (YYYY-MM-DD)"
@@ -73,6 +65,7 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
                 "End date must be after start date",
                 function (value) {
                   const { start_date } = this.parent;
+                  if (!start_date || !value) return true;
                   return new Date(value) > new Date(start_date);
                 }
               ),
@@ -85,8 +78,7 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
           // Step 3: DownPriceStep
           Yup.object().shape({
             down_price: Yup.number()
-              .min(0, "Down price must be positive")
-              .required("Down price is required"),
+              .min(0, "Down price must be positive"),
           }),
         ]
       : []),
@@ -94,8 +86,7 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
     // Terms
     Yup.object().shape({
       acceptTerms: Yup.boolean()
-        .oneOf([true], "You must accept the terms and conditions")
-        .required("Required"),
+        .oneOf([true], "You must accept the terms and conditions"),
     }),
 
     // Payment
@@ -165,6 +156,7 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
     end_date: "",
     acceptTerms: false,
     down_price: 0,
+    additional_details: "",
   };
 
   const handleSubmit = async (values: RentCarForm) => {
@@ -227,6 +219,10 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
       formData.append("end_date", values.end_date);
       if (contractType === "rent_to_own") {
         formData.append("down_price", values.down_price.toString());
+      }
+      // Append additional details if provided
+      if (values.additional_details) {
+        formData.append("additional_details", values.additional_details);
       }
       // Submit to API
       if (contractType === "rent_to_own")
@@ -317,7 +313,7 @@ export const RentalContract = ({ contractType }: RentalContractProps) => {
                           onClick={back}
                           disabled={currentStep === 0}
                           className={`${
-                            currentStep === 0 || isLastStep ? "hidden" : ""
+                            currentStep === 0 ? "hidden" : ""
                           } sm:px-12 px-6 py-2 rounded-md border text-white bg-gray-600 hover:bg-gray-700 disabled:opacity-50`}
                         >
                           {t("buttons.back")}

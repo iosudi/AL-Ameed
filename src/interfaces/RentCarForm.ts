@@ -18,4 +18,5 @@ export interface RentCarForm {
     end_date: string;
     acceptTerms: boolean,
     down_price: number;
+    additional_details?: string;
 }

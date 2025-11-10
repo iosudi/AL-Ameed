@@ -67,7 +67,7 @@ export const CarInfoStep = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
           <Label className="mb-2" htmlFor="fuel_type">
             {t("carForm.engineType")}
@@ -119,6 +119,23 @@ export const CarInfoStep = () => {
             className="text-red-500 text-sm"
           />
         </div>
+      </div>
+
+      <div>
+        <Label className="mb-2" htmlFor="additional_details">
+          {t("carForm.additionalDetails")}
+        </Label>
+        <Field
+          as="textarea"
+          name="additional_details"
+          className="border border-[#d40000] p-2 rounded-md w-full min-h-[120px]"
+          placeholder={t("carForm.additionalDetailsPlaceholder")}
+        />
+        <ErrorMessage
+          name="additional_details"
+          component="div"
+          className="text-red-500 text-sm"
+        />
       </div>
     </>
   );

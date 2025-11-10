@@ -20,7 +20,7 @@ export const TenantInformation = () => {
       <div className="grid sm:grid-cols-3 gap-4 mb-4">
         <div>
           <Label className="mb-2" htmlFor="customer_data.first_name">
-            {t("carForm.firstName")}*
+            {t("carForm.firstName")}
           </Label>
           <Field
             name="customer_data.first_name"
@@ -36,7 +36,7 @@ export const TenantInformation = () => {
 
         <div>
           <Label className="mb-2" htmlFor="customer_data.middle_name">
-            {t("carForm.middleName")}*
+            {t("carForm.middleName")}
           </Label>
           <Field
             name="customer_data.middle_name"
@@ -52,7 +52,7 @@ export const TenantInformation = () => {
 
         <div>
           <Label className="mb-2" htmlFor="customer_data.last_name">
-            {t("carForm.lastName")}*
+            {t("carForm.lastName")}
           </Label>
           <Field
             name="customer_data.last_name"
@@ -70,7 +70,7 @@ export const TenantInformation = () => {
       <div className="grid sm:grid-cols-3 gap-4">
         <div>
           <Label className="mb-2" htmlFor="customer_data.nationality">
-            {t("carForm.nationality")}*
+            {t("carForm.nationality")}
           </Label>
           <Select
             dir={i18n.language === "ar" ? "rtl" : "ltr"}
@@ -97,7 +97,7 @@ export const TenantInformation = () => {
 
         <div>
           <Label className="mb-2" htmlFor="customer_data.id_number">
-            {t("carForm.nationalId")}*
+            {t("carForm.nationalId")}
           </Label>
           <Field
             name="customer_data.id_number"
@@ -113,7 +113,7 @@ export const TenantInformation = () => {
 
         <div>
           <Label className="mb-2" htmlFor="customer_data.phone_number">
-            {t("carForm.phone")}*
+            {t("carForm.phone")}
           </Label>
           <Field
             name="customer_data.phone_number"
