@@ -1,15 +1,17 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useRoutes } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "./context/AuthContext";
 import i18n from "./i18n";
 import { routes } from "./routes";
+import banner from "./assets/بانر.png العميد.png";
+import { Dialog, DialogContent } from "./components/ui/dialog";
 
 const queryClient = new QueryClient();
-// const SIX_HOURS_MS = 6 * 60 * 60 * 1000;
+const SIX_HOURS_MS = 6 * 60 * 60 * 1000;
 
 const updateDir = (lng: string) => {
   const dir = lng === "ar" ? "rtl" : "ltr";
@@ -19,7 +21,7 @@ const updateDir = (lng: string) => {
 
 function App() {
   const routing = useRoutes(routes);
-  // const [showBanner, setShowBanner] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
     const currentLang = i18n.language || "en";
@@ -29,49 +31,24 @@ function App() {
       updateDir(lng);
     });
 
-    // const lastShown = localStorage.getItem("lastBannerShown");
-    // const now = Date.now();
+    const lastShown = localStorage.getItem("lastBannerShown");
+    const now = Date.now();
 
-    // if (!lastShown || now - parseInt(lastShown) > SIX_HOURS_MS) {
-    //   setShowBanner(true);
-    //   localStorage.setItem("lastBannerShown", now.toString());
-    // }
+    if (!lastShown || now - parseInt(lastShown) > SIX_HOURS_MS) {
+      setShowBanner(true);
+      localStorage.setItem("lastBannerShown", now.toString());
+    }
   }, []);
-
-  // const closeModal = () => setShowBanner(false);
 
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-        {/* <Modal
-          isOpen={showBanner}
-          onRequestClose={closeModal}
-          style={{
-            content: {
-              top: "50%",
-              left: "50%",
-              right: "auto",
-              bottom: "auto",
-              marginRight: "-50%",
-              transform: "translate(-50%, -50%)",
-              background: "transparent",
-              border: "none",
-              zIndex: 50,
-            },
-            overlay: {
-              backgroundColor: "rgba(0,0,0,0.6)",
-              zIndex: 50,
-            },
-          }}
-          ariaHideApp={false}
-        >
-          <img
-            src={banner}
-            alt="Banner"
-            onClick={closeModal}
-            className="max-w-full"
-          />
-        </Modal> */}
+        <Dialog open={showBanner} onOpenChange={setShowBanner}>
+          <DialogContent className="p-0 overflow-hidden [&_svg]:bg-red-700 [&_svg]:rounded-full [&_svg]:p-0.5 [&_svg]:size-6! ">
+            <img src={banner} alt="Banner" className="max-w-full" />
+          </DialogContent>
+        </Dialog>
+
         <div className="relative">
           {/* <img
             src={soon}
